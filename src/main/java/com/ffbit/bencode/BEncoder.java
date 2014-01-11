@@ -1,12 +1,19 @@
 package com.ffbit.bencode;
 
+import java.util.List;
+import java.util.Map;
+
 public class BEncoder {
     private StringEncoder stringEncoder;
     private IntegerEncoder integerEncoder;
+    private DictionaryEncoder dictionaryEncoder;
+    private ListEncoder listEncoder;
 
     public BEncoder() {
         stringEncoder = new StringEncoder();
         integerEncoder = new IntegerEncoder();
+        dictionaryEncoder = new DictionaryEncoder(this);
+        listEncoder = new ListEncoder(this);
     }
 
     public String encode(Object... inputs) {
@@ -19,8 +26,12 @@ public class BEncoder {
 
             if (e instanceof String) {
                 output.append(stringEncoder.encode((String) e));
-            } else {
+            } else if (e instanceof Integer) {
                 output.append(integerEncoder.encode((Integer) e));
+            } else if (e instanceof List) {
+                output.append(listEncoder.encode((List) e));
+            } else if (e instanceof Map) {
+                output.append(dictionaryEncoder.encode((Map) e));
             }
         }
 
