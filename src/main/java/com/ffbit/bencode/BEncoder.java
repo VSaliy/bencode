@@ -13,6 +13,10 @@ public class BEncoder {
         StringBuilder output = new StringBuilder();
 
         for (Object e : inputs) {
+            if (e == null) {
+                throw new BEncoderException("A null value occurred");
+            }
+
             if (e instanceof String) {
                 output.append(stringEncoder.encode((String) e));
             } else {

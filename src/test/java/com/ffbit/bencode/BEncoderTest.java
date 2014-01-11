@@ -14,4 +14,11 @@ public class BEncoderTest {
         assertThat(encoder.encode("foo", 42), is("3:fooi42e"));
     }
 
+    @Test(expected = BEncoderException.class)
+    public void itShouldRejectNulls() throws Exception {
+        BEncoder encoder = new BEncoder();
+
+        encoder.encode(null, 1);
+    }
+
 }
