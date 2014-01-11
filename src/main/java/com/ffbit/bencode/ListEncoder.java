@@ -3,6 +3,9 @@ package com.ffbit.bencode;
 import java.util.List;
 
 public class ListEncoder implements Encoder<List> {
+    public static final String PREFIX = "l";
+    public static final String SUFFFIX = "e";
+
     private BEncoder parent;
 
     public ListEncoder(BEncoder parent) {
@@ -11,7 +14,7 @@ public class ListEncoder implements Encoder<List> {
 
     @Override
     public String encode(List input) {
-        return "l" + parent.encode(input.toArray()) + "e";
+        return PREFIX + parent.encode(input.toArray()) + SUFFFIX;
     }
 
 }

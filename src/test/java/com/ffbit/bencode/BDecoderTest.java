@@ -20,4 +20,9 @@ public class BDecoderTest {
         assertThat(decoder.decode("3:fooi42e"), is(asList((Object) "foo", 42)));
     }
 
+    @Test
+    public void itShouldDecodeListOfStringAndInteger() throws Exception {
+        assertThat(decoder.decode("l3:fooi42ee"), is(asList((Object) asList("foo", 42))));
+    }
+
 }

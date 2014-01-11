@@ -3,20 +3,26 @@ package com.ffbit.bencode;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class BDecoder {
-    private StringDecoder stringDecoder;
-    private IntegerDecoder integerDecoder;
 
+    private StringDecoder stringDecoder;
     private StringEncoder stringEncoder;
+
+    private IntegerDecoder integerDecoder;
     private IntegerEncoder integerEncoder;
+
+    private ListDecoder listDecoder;
+    private ListEncoder listEncoder;
 
     public BDecoder() {
         stringDecoder = new StringDecoder();
-        integerDecoder = new IntegerDecoder();
-
         stringEncoder = new StringEncoder();
+
+        integerDecoder = new IntegerDecoder();
         integerEncoder = new IntegerEncoder();
+
+        listDecoder = new ListDecoder(this);
+        listEncoder = new ListEncoder(new BEncoder());
     }
 
     public List<Object> decode(String input) {
@@ -36,6 +42,10 @@ public class BDecoder {
                 String readString = stringDecoder.decode(remainder);
                 readObject = readString;
                 readTerm = stringEncoder.encode(readString);
+            } else if (remainder.startsWith(ListEncoder.PREFIX)) {
+                List<?> readList = listDecoder.decode(remainder);
+                readObject = readList;
+                readTerm = listEncoder.encode(readList);
             } else {
                 throw new RuntimeException(remainder);
             }
@@ -43,7 +53,6 @@ public class BDecoder {
             output.add(readObject);
             remainder = remainder.substring(readTerm.length());
         }
-
 
         return output;
     }

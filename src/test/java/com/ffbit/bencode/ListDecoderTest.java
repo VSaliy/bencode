@@ -11,7 +11,7 @@ public class ListDecoderTest {
 
     @Test
     public void itShouldDecodeEmptyList() throws Exception {
-        Decoder decoder = new ListDecoder();
+        Decoder decoder = new ListDecoder(new BDecoder());
 
         assertThat(decoder.decode("le"), is((Object) new ArrayList<Object>()));
     }

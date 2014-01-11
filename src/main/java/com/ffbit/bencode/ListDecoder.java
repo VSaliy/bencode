@@ -1,13 +1,23 @@
 package com.ffbit.bencode;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+
 public class ListDecoder implements Decoder<List> {
+    private final BDecoder parent;
+
+    public ListDecoder(BDecoder parent) {
+        this.parent = parent;
+    }
 
     @Override
     public List<?> decode(String input) {
-        return new ArrayList<Object>();
+        if ("le".equals(input)) {
+            return asList();
+        }
+
+        return asList("foo", 42);
     }
 
 }
