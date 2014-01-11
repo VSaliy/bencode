@@ -1,9 +1,9 @@
 package com.ffbit.bencode;
 
-public class StringEncoder implements Encoder {
+public class StringEncoder implements Encoder<String> {
 
     @Override
-    public String encode(Object input) {
+    public String encode(String input) {
         String str = String.valueOf(input);
         return str.length() + ":" + str;
     }

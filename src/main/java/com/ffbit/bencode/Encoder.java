@@ -1,7 +1,7 @@
 package com.ffbit.bencode;
 
-public interface Encoder {
+public interface Encoder<T> {
 
-    String encode(Object input);
+    String encode(T input);
 
 }

@@ -1,7 +1,7 @@
 package com.ffbit.bencode;
 
-public interface Decoder {
+public interface Decoder<T> {
 
-    Object decode(String input);
+    T decode(String input);
 
 }
