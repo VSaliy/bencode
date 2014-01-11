@@ -5,7 +5,7 @@ public class IntegerEncoder implements Encoder {
     public static final String SUFFIX = "e";
 
     @Override
-    public String encode(int input) {
+    public String encode(Object input) {
         return PREFIX + input + SUFFIX;
     }
 
