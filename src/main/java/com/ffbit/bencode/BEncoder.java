@@ -32,6 +32,9 @@ public class BEncoder {
                 output.append(listEncoder.encode((List) e));
             } else if (e instanceof Map) {
                 output.append(dictionaryEncoder.encode((Map) e));
+            } else {
+                throw new BEncoderException("An unsupported data type occurred "
+                        + e.getClass());
             }
         }
 

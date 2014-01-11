@@ -37,4 +37,9 @@ public class BEncoderTest {
         assertThat(encoder.encode(input.toArray()), is("1:1i2ed3:keyli1e1:2ee"));
     }
 
+    @Test(expected = BEncoderException.class)
+    public void itShouldRejectUnsupportedTypes() throws Exception {
+        encoder.encode(new Object());
+    }
+
 }
