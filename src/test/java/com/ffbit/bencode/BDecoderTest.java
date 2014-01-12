@@ -74,4 +74,17 @@ public class BDecoderTest {
         assertThat(decoder.decode(), is((Object) expected));
     }
 
+    @Test
+    public void itShouldDecodeDictionaryOfMultipleIntegerValuesAndNestedList() throws Exception {
+        InputStream in = new ByteArrayInputStream("d1:ai2e3:fooi42e1:lli1eee".getBytes());
+        decoder = new BDecoder(in);
+        HashMap<String, Object> expected = new HashMap<String, Object>() {{
+            put("a", 2);
+            put("foo", 42);
+            put("l", asList(1));
+        }};
+
+        assertThat(decoder.decode(), is((Object) expected));
+    }
+
 }
