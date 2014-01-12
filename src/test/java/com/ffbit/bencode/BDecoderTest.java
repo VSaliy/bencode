@@ -5,9 +5,10 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.List;
+import java.util.HashMap;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -34,7 +35,7 @@ public class BDecoderTest {
         InputStream in = new ByteArrayInputStream("li1ei2ee".getBytes());
         decoder = new BDecoder(in);
 
-        assertThat(decoder.decode(), is((Object)asList(1, 2)));
+        assertThat(decoder.decode(), is((Object) asList(1, 2)));
     }
 
     @Test
@@ -42,7 +43,7 @@ public class BDecoderTest {
         InputStream in = new ByteArrayInputStream("li1e1:ae".getBytes());
         decoder = new BDecoder(in);
 
-        assertThat(decoder.decode(), is((Object)asList(1, "a")));
+        assertThat(decoder.decode(), is((Object) asList(1, "a")));
     }
 
     @Test
@@ -50,7 +51,27 @@ public class BDecoderTest {
         InputStream in = new ByteArrayInputStream("li1e1:ali2eee".getBytes());
         decoder = new BDecoder(in);
 
-        assertThat(decoder.decode(), is((Object)asList(1, "a", asList(2))));
+        assertThat(decoder.decode(), is((Object) asList(1, "a", asList(2))));
+    }
+
+    @Test
+    public void itShouldDecodeDictionaryOfSingleIntegerValue() throws Exception {
+        InputStream in = new ByteArrayInputStream("d1:ai1ee".getBytes());
+        decoder = new BDecoder(in);
+
+        assertThat(decoder.decode(), is((Object) singletonMap("a", 1)));
+    }
+
+    @Test
+    public void itShouldDecodeDictionaryOfMultipleIntegerValues() throws Exception {
+        InputStream in = new ByteArrayInputStream("d1:ai2e3:fooi42ee".getBytes());
+        decoder = new BDecoder(in);
+        HashMap<String, Object> expected = new HashMap<String, Object>() {{
+            put("a", 2);
+            put("foo", 42);
+        }};
+
+        assertThat(decoder.decode(), is((Object) expected));
     }
 
 }

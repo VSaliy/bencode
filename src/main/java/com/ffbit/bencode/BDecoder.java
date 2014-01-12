@@ -16,7 +16,9 @@ public class BDecoder {
 
     private ListDecoder listDecoder;
     private ListEncoder listEncoder;
+    private DictionaryDecoder dictionaryDecoder;
 
+    @Deprecated
     public BDecoder() {
         stringDecoder = new StringDecoder();
         stringEncoder = new StringEncoder();
@@ -31,10 +33,12 @@ public class BDecoder {
     public BDecoder(InputStream in) {
         this.in = in;
         listDecoder = new ListDecoder(in, this);
+        dictionaryDecoder = new DictionaryDecoder(in, this);
         integerDecoder = new IntegerDecoder(in);
         stringDecoder = new StringDecoder(in);
     }
 
+    @Deprecated
     public List<Object> decode(String input) {
         List<Object> output = new ArrayList<Object>();
 
@@ -70,22 +74,22 @@ public class BDecoder {
     public Object decode() throws IOException {
         in.mark(1);
         int i = in.read();
-        System.out.println(Character.getName(i));
 
         if (listDecoder.isApplicable(i)) {
             in.reset();
             return listDecoder.decode();
-        } else if (integerDecoder.isApplicable(i)) {
-            System.out.println("integer time");
+        } else if (dictionaryDecoder.isApplicable(i)) {
             in.reset();
-            System.out.println("integer time " + Character.getName(i));
+            return dictionaryDecoder.decode();
+        } else if (integerDecoder.isApplicable(i)) {
+            in.reset();
             return integerDecoder.decode();
         } else if (stringDecoder.isApplicable(i)) {
             in.reset();
             return stringDecoder.decode();
         }
 
-        return null;
+        throw new IllegalArgumentException("bad byte " + (char) i);
     }
 
 }
