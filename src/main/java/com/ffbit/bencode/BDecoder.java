@@ -1,10 +1,13 @@
 package com.ffbit.bencode;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BDecoder {
 
+    private InputStream in;
     private StringDecoder stringDecoder;
     private StringEncoder stringEncoder;
 
@@ -23,6 +26,12 @@ public class BDecoder {
 
         listDecoder = new ListDecoder(this);
         listEncoder = new ListEncoder(new BEncoder());
+    }
+
+    public BDecoder(InputStream in) {
+        this.in = in;
+        listDecoder = new ListDecoder(in, this);
+        integerDecoder = new IntegerDecoder(in);
     }
 
     public List<Object> decode(String input) {
@@ -55,6 +64,24 @@ public class BDecoder {
         }
 
         return output;
+    }
+
+    public Object decode() throws IOException {
+        in.mark(1);
+        int i = in.read();
+        System.out.println(Character.getName(i));
+
+        if (listDecoder.isApplicable(i)) {
+            in.reset();
+            return listDecoder.decode();
+        } else if (integerDecoder.isApplicable((byte) i)) {
+            System.out.println("integer time");
+            in.reset();
+            System.out.println("integer time " + Character.getName(i));
+            return integerDecoder.decode();
+        }
+
+        return null;
     }
 
 }
