@@ -45,4 +45,12 @@ public class BDecoderTest {
         assertThat(decoder.decode(), is((Object)asList(1, "a")));
     }
 
+    @Test
+    public void itShouldDecodeListOfStringAndIntegerAndNestedList() throws Exception {
+        InputStream in = new ByteArrayInputStream("li1e1:ali2eee".getBytes());
+        decoder = new BDecoder(in);
+
+        assertThat(decoder.decode(), is((Object)asList(1, "a", asList(2))));
+    }
+
 }

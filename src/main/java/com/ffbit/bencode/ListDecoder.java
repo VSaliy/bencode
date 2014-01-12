@@ -14,7 +14,7 @@ public class ListDecoder implements Decoder<List> {
     private BDecoder parent;
     private InputStream in;
     private char current;
-    private List<Object> content;
+//    private List<Object> content;
 
     public ListDecoder(BDecoder parent) {
         this.parent = parent;
@@ -36,7 +36,7 @@ public class ListDecoder implements Decoder<List> {
 
     public List<?> decode() throws IOException {
         checkPrefix();
-        readContent();
+        List<Object> content = readContent();
         checkSuffix();
         return content;
     }
@@ -54,8 +54,8 @@ public class ListDecoder implements Decoder<List> {
         return current;
     }
 
-    private void readContent() throws IOException {
-        content = new ArrayList<Object>();
+    private List<Object> readContent() throws IOException {
+        List<Object> content = new ArrayList<Object>();
 
         in.mark(1);
         System.out.println("before loop " + Character.getName(current));
@@ -69,6 +69,7 @@ public class ListDecoder implements Decoder<List> {
         }
         in.reset();
 
+        return content;
     }
 
     private void checkSuffix() throws IOException {
