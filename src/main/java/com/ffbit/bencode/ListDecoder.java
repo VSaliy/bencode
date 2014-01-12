@@ -60,11 +60,8 @@ public class ListDecoder implements Decoder<List> {
         in.mark(1);
         System.out.println("before loop " + Character.getName(current));
         while (read() != SUFF) {
-//            in.mark(1);
             in.reset();
             System.out.println("within loop " + Character.getName(current));
-//            int k = 1 / 0;
-//            in.reset();
             Object element = parent.decode();
             content.add(element);
             System.out.println(content);

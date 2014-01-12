@@ -25,7 +25,7 @@ public class BDecoderTest {
     }
 
     @Test
-    public void itShouldDecodeListOfStringAndInteger() throws Exception {
+    public void itShouldDecodeListOfStringAndIntegerOld() throws Exception {
         assertThat(decoder.decode("l3:fooi42ee"), is(asList((Object) asList("foo", 42))));
     }
 
@@ -35,6 +35,14 @@ public class BDecoderTest {
         decoder = new BDecoder(in);
 
         assertThat(decoder.decode(), is((Object)asList(1, 2)));
+    }
+
+    @Test
+    public void itShouldDecodeListOfStringAndInteger() throws Exception {
+        InputStream in = new ByteArrayInputStream("li1e1:ae".getBytes());
+        decoder = new BDecoder(in);
+
+        assertThat(decoder.decode(), is((Object)asList(1, "a")));
     }
 
 }

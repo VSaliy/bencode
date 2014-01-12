@@ -102,7 +102,7 @@ public class IntegerDecoder implements Decoder<Integer> {
         sb.setLength(0);
     }
 
-    public boolean isApplicable(byte b) {
+    public boolean isApplicable(int b) {
         return b == PREF;
     }
 

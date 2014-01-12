@@ -32,6 +32,7 @@ public class BDecoder {
         this.in = in;
         listDecoder = new ListDecoder(in, this);
         integerDecoder = new IntegerDecoder(in);
+        stringDecoder = new StringDecoder(in);
     }
 
     public List<Object> decode(String input) {
@@ -74,11 +75,14 @@ public class BDecoder {
         if (listDecoder.isApplicable(i)) {
             in.reset();
             return listDecoder.decode();
-        } else if (integerDecoder.isApplicable((byte) i)) {
+        } else if (integerDecoder.isApplicable(i)) {
             System.out.println("integer time");
             in.reset();
             System.out.println("integer time " + Character.getName(i));
             return integerDecoder.decode();
+        } else if (stringDecoder.isApplicable(i)) {
+            in.reset();
+            return stringDecoder.decode();
         }
 
         return null;

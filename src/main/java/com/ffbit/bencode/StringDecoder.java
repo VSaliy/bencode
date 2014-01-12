@@ -54,4 +54,8 @@ public class StringDecoder implements Decoder<String> {
     private void checkSeparator() {
     }
 
+    public boolean isApplicable(int b) {
+        return Character.isDigit(b);
+    }
+
 }
