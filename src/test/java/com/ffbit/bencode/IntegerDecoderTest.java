@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.ByteArrayInputStream;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -40,6 +42,21 @@ public class IntegerDecoderTest {
     })
     public void itShouldRejectMalformedInput(String input) throws Exception {
         decoder.decode(input);
+    }
+
+    @Test
+    @Parameters({
+            "i0e, 0",
+            "i1e, 1",
+            "i-1e, -1",
+            "i42e, 42",
+            "i1e3:foo, 1"
+    })
+    public void itShouldDecodeIntegers(String input, int expected) throws Exception {
+        ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
+        IntegerDecoder decoder = new IntegerDecoder();
+
+        assertThat(decoder.decode(in), is(expected));
     }
 
 }
