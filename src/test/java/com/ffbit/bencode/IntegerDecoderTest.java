@@ -54,9 +54,9 @@ public class IntegerDecoderTest {
     })
     public void itShouldDecodeIntegers(String input, int expected) throws Exception {
         ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
-        IntegerDecoder decoder = new IntegerDecoder();
+        IntegerDecoder decoder = new IntegerDecoder(in);
 
-        assertThat(decoder.decode(in), is(expected));
+        assertThat(decoder.decode(), is(expected));
     }
 
 }
