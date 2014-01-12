@@ -93,8 +93,6 @@ public class IntegerDecoder implements Decoder<Integer> {
         String numString = sb.toString();
         clear();
 
-        System.out.println("read an integer " + numString);
-
         return Integer.valueOf(numString);
     }
 
