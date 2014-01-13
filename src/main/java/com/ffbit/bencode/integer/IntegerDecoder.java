@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class IntegerDecoder implements Decoder<Integer> {
-    private final char PREF = 'i';
-    private final char SUFF = 'e';
+    private final char PREFIX = 'i';
+    private final char SUFFIX = 'e';
     private final char MINUS = '-';
     private final char PLUS = '+';
 
@@ -21,6 +21,11 @@ public class IntegerDecoder implements Decoder<Integer> {
     }
 
     @Override
+    public boolean isApplicable(int b) {
+        return b == PREFIX;
+    }
+
+    @Override
     public Integer decode() throws IOException {
         checkPrefix();
         readSign();
@@ -30,9 +35,9 @@ public class IntegerDecoder implements Decoder<Integer> {
     }
 
     private void checkPrefix() throws IOException {
-        if (read() != PREF) {
+        if (read() != PREFIX) {
             throw new IntegerDecoderException(
-                    "Unexpected beginning of integer <" + current + ">, expected <" + PREF + ">");
+                    "Unexpected beginning of integer <" + current + ">, expected <" + PREFIX + ">");
         }
     }
 
@@ -58,9 +63,9 @@ public class IntegerDecoder implements Decoder<Integer> {
     }
 
     private void checkSuffix() throws IOException {
-        if (current != SUFF) {
+        if (current != SUFFIX) {
             throw new IntegerDecoderException(
-                    "Unexpected end of integer <" + current + ">, expected <" + SUFF + ">");
+                    "Unexpected end of integer <" + current + ">, expected <" + SUFFIX + ">");
         }
     }
 
@@ -77,10 +82,6 @@ public class IntegerDecoder implements Decoder<Integer> {
 
     private void clear() {
         sb.setLength(0);
-    }
-
-    public boolean isApplicable(int b) {
-        return b == PREF;
     }
 
 }

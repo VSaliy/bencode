@@ -7,44 +7,48 @@ import com.ffbit.bencode.string.StringDecoder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 
 public class BDecoder {
-
     private InputStream in;
-    private StringDecoder stringDecoder;
 
-    private IntegerDecoder integerDecoder;
-
-    private ListDecoder listDecoder;
-    private DictionaryDecoder dictionaryDecoder;
+    private Decoder stringDecoder;
+    private Decoder integerDecoder;
+    private Decoder listDecoder;
+    private Decoder dictionaryDecoder;
 
     public BDecoder(InputStream in) {
+        this(in, Decoder.DEFAULT_CHARSET);
+    }
+
+    public BDecoder(InputStream in, Charset charset) {
         this.in = in;
         listDecoder = new ListDecoder(in, this);
         dictionaryDecoder = new DictionaryDecoder(in, this);
         integerDecoder = new IntegerDecoder(in);
-        stringDecoder = new StringDecoder(in);
+        stringDecoder = new StringDecoder(in, charset);
     }
 
     public Object decode() throws IOException {
         in.mark(1);
         int i = in.read();
 
+        Decoder decoder;
+
         if (listDecoder.isApplicable(i)) {
-            in.reset();
-            return listDecoder.decode();
+            decoder = listDecoder;
         } else if (dictionaryDecoder.isApplicable(i)) {
-            in.reset();
-            return dictionaryDecoder.decode();
+            decoder = dictionaryDecoder;
         } else if (integerDecoder.isApplicable(i)) {
-            in.reset();
-            return integerDecoder.decode();
+            decoder = integerDecoder;
         } else if (stringDecoder.isApplicable(i)) {
-            in.reset();
-            return stringDecoder.decode();
+            decoder = stringDecoder;
+        } else {
+            throw new BDecoderException("An unsupported symbol <" + (char) i + "> occurred");
         }
 
-        throw new BDecoderException("An unsupported symbol <" + (char) i + "> has occurred.");
+        in.reset();
+        return decoder.decode();
     }
 
 }

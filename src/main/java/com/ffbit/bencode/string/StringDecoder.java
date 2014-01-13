@@ -4,16 +4,25 @@ import com.ffbit.bencode.Decoder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 
 public class StringDecoder implements Decoder<String> {
     private final char SEPARATOR = ':';
 
-    private InputStream in;
+    private final InputStream in;
+    private final Charset charset;
+
     private char current;
     private int length;
 
-    public StringDecoder(InputStream in) {
+    public StringDecoder(InputStream in, Charset charset) {
         this.in = in;
+        this.charset = charset;
+    }
+
+    @Override
+    public boolean isApplicable(int b) {
+        return Character.isDigit(b);
     }
 
     @Override
@@ -23,7 +32,7 @@ public class StringDecoder implements Decoder<String> {
         byte[] bytes = new byte[length];
         in.read(bytes);
 
-        return new String(bytes);
+        return new String(bytes, charset);
     }
 
     private void readLength() throws IOException {
@@ -46,10 +55,6 @@ public class StringDecoder implements Decoder<String> {
             throw new StringDecoderException(
                     "Unexpected separator of string <" + current + ">, expected <" + SEPARATOR + ">");
         }
-    }
-
-    public boolean isApplicable(int b) {
-        return Character.isDigit(b);
     }
 
 }

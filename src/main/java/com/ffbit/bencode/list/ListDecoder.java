@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListDecoder implements Decoder<List> {
-    private final char PREF = 'l';
-    private final char SUFF = 'e';
+    private final char PREFIX = 'l';
+    private final char SUFFIX = 'e';
     private BDecoder parent;
     private InputStream in;
     private char current;
@@ -25,6 +25,11 @@ public class ListDecoder implements Decoder<List> {
     }
 
     @Override
+    public boolean isApplicable(int b) {
+        return b == PREFIX;
+    }
+
+    @Override
     public List<?> decode() throws IOException {
         checkPrefix();
         List<Object> content = readContent();
@@ -33,9 +38,9 @@ public class ListDecoder implements Decoder<List> {
     }
 
     private void checkPrefix() throws IOException {
-        if (read() != PREF) {
+        if (read() != PREFIX) {
             throw new ListDecoderException(
-                    "Unexpected beginning of list <" + current + ">, expected <" + PREF + ">");
+                    "Unexpected beginning of list <" + current + ">, expected <" + PREFIX + ">");
         }
 
     }
@@ -49,7 +54,7 @@ public class ListDecoder implements Decoder<List> {
         List<Object> content = new ArrayList<Object>();
 
         in.mark(1);
-        while (read() != SUFF) {
+        while (read() != SUFFIX) {
             in.reset();
             Object element = parent.decode();
             content.add(element);
@@ -61,14 +66,10 @@ public class ListDecoder implements Decoder<List> {
     }
 
     private void checkSuffix() throws IOException {
-        if (read() != SUFF) {
+        if (read() != SUFFIX) {
             throw new ListDecoderException(
-                    "Unexpected end of list <" + current + ">, expected <" + SUFF + ">");
+                    "Unexpected end of list <" + current + ">, expected <" + SUFFIX + ">");
         }
-    }
-
-    public boolean isApplicable(int b) {
-        return b == PREF;
     }
 
 }
