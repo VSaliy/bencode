@@ -1,4 +1,6 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.integer;
+
+import com.ffbit.bencode.Encoder;
 
 public class IntegerEncoder implements Encoder<Integer> {
     public static final String PREFIX = "i";

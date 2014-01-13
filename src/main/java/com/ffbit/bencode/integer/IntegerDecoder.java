@@ -1,12 +1,11 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.integer;
+
+import com.ffbit.bencode.Decoder;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.ffbit.bencode.IntegerEncoder.PREFIX;
-import static com.ffbit.bencode.IntegerEncoder.SUFFIX;
 
 public class IntegerDecoder implements Decoder<Integer> {
     private final char PREF = 'i';
@@ -30,7 +29,7 @@ public class IntegerDecoder implements Decoder<Integer> {
     @Deprecated
     @Override
     public Integer decode(String input) {
-        Pattern pattern = Pattern.compile("(?<=" + PREFIX + ")-?\\d+(?=" + SUFFIX + ")");
+        Pattern pattern = Pattern.compile("(?<=" + IntegerEncoder.PREFIX + ")-?\\d+(?=" + IntegerEncoder.SUFFIX + ")");
         Matcher matcher = pattern.matcher(input);
 
         if (!matcher.find()) {

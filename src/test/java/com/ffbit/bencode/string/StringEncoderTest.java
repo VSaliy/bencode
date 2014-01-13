@@ -1,5 +1,6 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.string;
 
+import com.ffbit.bencode.Encoder;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
@@ -9,17 +10,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
-public class IntegerEncoderTest {
+public class StringEncoderTest {
 
     @Test
     @Parameters({
-            "0, i0e",
-            "1, i1e",
-            "-1, i-1e",
-            "42, i42e"
+            "a, 1:a",
+            "foo, 3:foo"
     })
-    public void itShouldEncodeIntegers(int input, String expectedOutput) throws Exception {
-        Encoder encoder = new IntegerEncoder();
+    public void itShouldEncodeStrings(String input, String expectedOutput) throws Exception {
+        Encoder encoder = new StringEncoder();
 
         assertThat(encoder.encode(input), is(expectedOutput));
     }

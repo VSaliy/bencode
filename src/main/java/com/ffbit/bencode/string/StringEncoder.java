@@ -1,4 +1,6 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.string;
+
+import com.ffbit.bencode.Encoder;
 
 public class StringEncoder implements Encoder<String> {
     public static final String SEPARATOR = ":";

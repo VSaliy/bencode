@@ -1,10 +1,10 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.dictionary;
+
+import com.ffbit.bencode.BDecoder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DictionaryDecoder {

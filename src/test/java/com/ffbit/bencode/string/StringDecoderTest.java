@@ -1,5 +1,6 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.string;
 
+import com.ffbit.bencode.Decoder;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;

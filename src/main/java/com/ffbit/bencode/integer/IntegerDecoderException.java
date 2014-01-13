@@ -1,4 +1,4 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.integer;
 
 public class IntegerDecoderException extends IllegalArgumentException {
     private static final long serialVersionUID = 1L;

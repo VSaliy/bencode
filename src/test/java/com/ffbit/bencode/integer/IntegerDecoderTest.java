@@ -1,5 +1,8 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.integer;
 
+import com.ffbit.bencode.Decoder;
+import com.ffbit.bencode.integer.IntegerDecoder;
+import com.ffbit.bencode.integer.IntegerDecoderException;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Before;

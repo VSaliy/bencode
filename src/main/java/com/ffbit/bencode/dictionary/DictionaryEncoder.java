@@ -1,4 +1,7 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.dictionary;
+
+import com.ffbit.bencode.BEncoder;
+import com.ffbit.bencode.Encoder;
 
 import java.util.ArrayList;
 import java.util.Collections;

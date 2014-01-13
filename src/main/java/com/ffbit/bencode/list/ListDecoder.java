@@ -1,9 +1,11 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.list;
+
+import com.ffbit.bencode.BDecoder;
+import com.ffbit.bencode.Decoder;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;

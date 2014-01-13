@@ -1,5 +1,13 @@
 package com.ffbit.bencode;
 
+import com.ffbit.bencode.dictionary.DictionaryDecoder;
+import com.ffbit.bencode.integer.IntegerDecoder;
+import com.ffbit.bencode.integer.IntegerEncoder;
+import com.ffbit.bencode.list.ListDecoder;
+import com.ffbit.bencode.list.ListEncoder;
+import com.ffbit.bencode.string.StringDecoder;
+import com.ffbit.bencode.string.StringEncoder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;

@@ -1,5 +1,10 @@
 package com.ffbit.bencode;
 
+import com.ffbit.bencode.dictionary.DictionaryEncoder;
+import com.ffbit.bencode.integer.IntegerEncoder;
+import com.ffbit.bencode.list.ListEncoder;
+import com.ffbit.bencode.string.StringEncoder;
+
 import java.util.List;
 import java.util.Map;
 

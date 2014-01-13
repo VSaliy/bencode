@@ -1,4 +1,6 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.string;
+
+import com.ffbit.bencode.Decoder;
 
 import java.io.IOException;
 import java.io.InputStream;

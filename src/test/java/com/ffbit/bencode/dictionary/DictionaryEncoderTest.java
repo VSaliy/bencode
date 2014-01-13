@@ -1,12 +1,13 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.dictionary;
 
+import com.ffbit.bencode.BEncoder;
+import com.ffbit.bencode.Encoder;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

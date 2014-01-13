@@ -1,5 +1,7 @@
-package com.ffbit.bencode;
+package com.ffbit.bencode.list;
 
+import com.ffbit.bencode.BEncoder;
+import com.ffbit.bencode.Encoder;
 import org.junit.Test;
 
 import java.util.Arrays;
