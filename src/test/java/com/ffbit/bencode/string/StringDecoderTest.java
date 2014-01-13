@@ -27,4 +27,16 @@ public class StringDecoderTest {
         assertThat(decoder.decode(), is(expected));
     }
 
+    @Test(expected = StringDecoderException.class)
+    @Parameters({
+            "1a",
+            "0"
+    })
+    public void itShouldRejectMalformedInputs(String input) throws Exception {
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        StringDecoder decoder = new StringDecoder(in);
+
+        decoder.decode();
+    }
+
 }

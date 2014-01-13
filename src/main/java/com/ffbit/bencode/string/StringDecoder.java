@@ -16,7 +16,6 @@ public class StringDecoder implements Decoder<String> {
         this.in = in;
     }
 
-
     @Override
     public String decode() throws IOException {
         readLength();
@@ -43,6 +42,10 @@ public class StringDecoder implements Decoder<String> {
     }
 
     private void checkSeparator() {
+        if (current != SEPARATOR) {
+            throw new StringDecoderException(
+                    "Unexpected separator of string <" + current + ">, expected <" + SEPARATOR + ">");
+        }
     }
 
     public boolean isApplicable(int b) {
