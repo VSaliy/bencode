@@ -1,10 +1,12 @@
 package com.ffbit.bencode.dictionary;
 
-public class DictionaryDecoderException extends IllegalArgumentException {
-    private static final long serialVersionUID = -4671144053738846427L;
+import com.ffbit.bencode.BDecoderException;
 
-    public DictionaryDecoderException(String s) {
-        super(s);
+public class DictionaryDecoderException extends BDecoderException {
+    private static final long serialVersionUID = 1L;
+
+    public DictionaryDecoderException(String message) {
+        super(message);
     }
 
 }

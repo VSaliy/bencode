@@ -1,10 +1,12 @@
 package com.ffbit.bencode.list;
 
-public class ListDecoderException extends IllegalArgumentException {
-    private static final long serialVersionUID = -8398762875192084917L;
+import com.ffbit.bencode.BDecoderException;
 
-    public ListDecoderException(String s) {
-        super(s);
+public class ListDecoderException extends BDecoderException {
+    private static final long serialVersionUID = 1L;
+
+    public ListDecoderException(String message) {
+        super(message);
     }
 
 }

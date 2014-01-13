@@ -44,7 +44,7 @@ public class BDecoder {
             return stringDecoder.decode();
         }
 
-        throw new IllegalArgumentException("bad byte " + (char) i);
+        throw new BDecoderException("An unsupported symbol <" + (char) i + "> has occurred.");
     }
 
 }
