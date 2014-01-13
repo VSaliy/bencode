@@ -8,15 +8,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-
 public class ListDecoder implements Decoder<List> {
     private final char PREF = 'l';
     private final char SUFF = 'e';
     private BDecoder parent;
     private InputStream in;
     private char current;
-//    private List<Object> content;
 
     public ListDecoder(BDecoder parent) {
         this.parent = parent;
@@ -28,14 +25,6 @@ public class ListDecoder implements Decoder<List> {
     }
 
     @Override
-    public List<?> decode(String input) {
-        if ("le".equals(input)) {
-            return asList();
-        }
-
-        return asList("foo", 42);
-    }
-
     public List<?> decode() throws IOException {
         checkPrefix();
         List<Object> content = readContent();

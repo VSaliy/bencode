@@ -1,6 +1,5 @@
 package com.ffbit.bencode;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -14,21 +13,6 @@ import static org.junit.Assert.assertThat;
 
 public class BDecoderTest {
     private BDecoder decoder;
-
-    @Before
-    public void setUp() throws Exception {
-        decoder = new BDecoder();
-    }
-
-    @Test
-    public void itShouldDecodeStringAndInteger() throws Exception {
-        assertThat(decoder.decode("3:fooi42e"), is(asList((Object) "foo", 42)));
-    }
-
-    @Test
-    public void itShouldDecodeListOfStringAndIntegerOld() throws Exception {
-        assertThat(decoder.decode("l3:fooi42ee"), is(asList((Object) asList("foo", 42))));
-    }
 
     @Test
     public void itShouldParseListOfIntegers() throws Exception {

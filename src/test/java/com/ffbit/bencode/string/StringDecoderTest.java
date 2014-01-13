@@ -1,6 +1,5 @@
 package com.ffbit.bencode.string;
 
-import com.ffbit.bencode.Decoder;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
@@ -14,18 +13,6 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class StringDecoderTest {
-
-    @Test
-    @Parameters({
-            "1:a, a",
-            "3:foo, foo",
-            "3:fooi5e, foo"
-    })
-    public void itShouldDecodeStringsOld(String input, String expectedOutput) throws Exception {
-        Decoder decoder = new StringDecoder();
-
-        assertThat(decoder.decode(input), is((Object) expectedOutput));
-    }
 
     @Test
     @Parameters({

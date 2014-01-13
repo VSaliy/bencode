@@ -12,23 +12,12 @@ public class StringDecoder implements Decoder<String> {
     private char current;
     private int length;
 
-    @Deprecated
-    public StringDecoder() {
-    }
-
     public StringDecoder(InputStream in) {
         this.in = in;
     }
 
+
     @Override
-    public String decode(String input) {
-        int separatorIndex = input.indexOf(SEPARATOR);
-        int length = Integer.valueOf(input.substring(0, separatorIndex));
-        String value = input.substring(separatorIndex + 1, separatorIndex + 1 + length);
-
-        return value;
-    }
-
     public String decode() throws IOException {
         readLength();
         checkSeparator();

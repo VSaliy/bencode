@@ -4,8 +4,6 @@ import com.ffbit.bencode.Decoder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class IntegerDecoder implements Decoder<Integer> {
     private final char PREF = 'i';
@@ -17,30 +15,12 @@ public class IntegerDecoder implements Decoder<Integer> {
     private StringBuilder sb;
     private char current;
 
-    @Deprecated
-    public IntegerDecoder() {
-    }
-
     public IntegerDecoder(InputStream in) {
         this.in = in;
         sb = new StringBuilder();
     }
 
-    @Deprecated
     @Override
-    public Integer decode(String input) {
-        Pattern pattern = Pattern.compile("(?<=" + IntegerEncoder.PREFIX + ")-?\\d+(?=" + IntegerEncoder.SUFFIX + ")");
-        Matcher matcher = pattern.matcher(input);
-
-        if (!matcher.find()) {
-            throw new IntegerDecoderException("Could not decode an integer from value <" + input + ">");
-        }
-
-        String intString = matcher.group();
-
-        return Integer.valueOf(intString);
-    }
-
     public Integer decode() throws IOException {
         checkPrefix();
         readSign();

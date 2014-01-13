@@ -1,13 +1,14 @@
 package com.ffbit.bencode.dictionary;
 
 import com.ffbit.bencode.BDecoder;
+import com.ffbit.bencode.Decoder;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DictionaryDecoder {
+public class DictionaryDecoder implements Decoder<Map<String, Object>> {
     public static final char PREFIX = 'd';
     private static final char SUFFIX = 'e';
     private final InputStream in;
@@ -23,6 +24,7 @@ public class DictionaryDecoder {
         return b == PREFIX;
     }
 
+    @Override
     public Map<String, Object> decode() throws IOException {
         checkPrefix();
         Map<String, Object> content = readContent();
