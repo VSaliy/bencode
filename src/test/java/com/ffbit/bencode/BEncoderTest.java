@@ -24,15 +24,22 @@ public class BEncoderTest {
     }
 
     @Test
-    public void itShouldEncodeStringAndInteger() throws Exception {
-        encoder.encode("foo", 42);
+    public void itShouldEncodeString() throws Exception {
+        encoder.encode("foo");
 
-        assertThat(out.toString(), is("3:fooi42e"));
+        assertThat(out.toString(), is("3:foo"));
+    }
+
+    @Test
+    public void itShouldEncodeInteger() throws Exception {
+        encoder.encode(42);
+
+        assertThat(out.toString(), is("i42e"));
     }
 
     @Test(expected = BEncoderException.class)
     public void itShouldRejectNulls() throws Exception {
-        encoder.encode((Object) null);
+        encoder.encode(null);
     }
 
     @Test(expected = BEncoderException.class)
@@ -45,6 +52,7 @@ public class BEncoderTest {
         List<?> input = asList("1", 2, singletonMap("key", asList(1, "2")));
 
         encoder.encode(input);
+
         assertThat(out.toString(), is("l1:1i2ed3:keyli1e1:2eee"));
     }
 

@@ -28,25 +28,25 @@ public class BEncoder {
         listEncoder = new ListEncoder(this, out);
     }
 
-    public String encode(Object... inputs) {
-        for (Object e : inputs) {
-            if (e == null) {
+    public String encode(Object input) {
+//        for (Object input : inputs) {
+            if (input == null) {
                 throw new BEncoderException("A null value occurred");
             }
 
-            if (e instanceof String) {
-                stringEncoder.encode(e);
-            } else if (e instanceof Integer) {
-                integerEncoder.encode(e);
-            } else if (e instanceof List) {
-                listEncoder.encode(e);
-            } else if (e instanceof Map) {
-                dictionaryEncoder.encode(e);
+            if (input instanceof String) {
+                stringEncoder.encode(input);
+            } else if (input instanceof Integer) {
+                integerEncoder.encode(input);
+            } else if (input instanceof List) {
+                listEncoder.encode(input);
+            } else if (input instanceof Map) {
+                dictionaryEncoder.encode(input);
             } else {
                 throw new BEncoderException("An unsupported data type occurred "
-                        + e.getClass());
+                        + input.getClass());
             }
-        }
+//        }
 
         return "";
     }
