@@ -7,8 +7,6 @@ import com.ffbit.bencode.string.StringEncoder;
 
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Map;
 
 public class BEncoder implements Encoder<Object> {
     private Encoder stringEncoder;
@@ -38,21 +36,18 @@ public class BEncoder implements Encoder<Object> {
 
     @Override
     public String encode(Object input) {
-        if (input == null) {
-            throw new BEncoderException("A null value occurred");
+        if (!isApplicable(input)) {
+            throw new BEncoderException("An unsupported input occurred <" + input + ">");
         }
 
-        if (input instanceof String) {
+        if (stringEncoder.isApplicable(input)) {
             stringEncoder.encode(input);
-        } else if (input instanceof Integer) {
+        } else if (integerEncoder.isApplicable(input)) {
             integerEncoder.encode(input);
-        } else if (input instanceof List) {
+        } else if (listEncoder.isApplicable(input)) {
             listEncoder.encode(input);
-        } else if (input instanceof Map) {
+        } else if (dictionaryEncoder.isApplicable(input)) {
             dictionaryEncoder.encode(input);
-        } else {
-            throw new BEncoderException("An unsupported data type occurred "
-                    + input.getClass());
         }
 
         return "";
