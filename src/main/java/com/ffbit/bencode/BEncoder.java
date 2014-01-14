@@ -29,24 +29,22 @@ public class BEncoder {
     }
 
     public String encode(Object input) {
-//        for (Object input : inputs) {
-            if (input == null) {
-                throw new BEncoderException("A null value occurred");
-            }
+        if (input == null) {
+            throw new BEncoderException("A null value occurred");
+        }
 
-            if (input instanceof String) {
-                stringEncoder.encode(input);
-            } else if (input instanceof Integer) {
-                integerEncoder.encode(input);
-            } else if (input instanceof List) {
-                listEncoder.encode(input);
-            } else if (input instanceof Map) {
-                dictionaryEncoder.encode(input);
-            } else {
-                throw new BEncoderException("An unsupported data type occurred "
-                        + input.getClass());
-            }
-//        }
+        if (input instanceof String) {
+            stringEncoder.encode(input);
+        } else if (input instanceof Integer) {
+            integerEncoder.encode(input);
+        } else if (input instanceof List) {
+            listEncoder.encode(input);
+        } else if (input instanceof Map) {
+            dictionaryEncoder.encode(input);
+        } else {
+            throw new BEncoderException("An unsupported data type occurred "
+                    + input.getClass());
+        }
 
         return "";
     }

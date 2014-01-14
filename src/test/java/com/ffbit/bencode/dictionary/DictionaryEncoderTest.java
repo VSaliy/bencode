@@ -17,17 +17,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class DictionaryEncoderTest {
+    private Charset charset = Decoder.DEFAULT_CHARSET;
+    private String charsetName = charset.name();
+
     private Encoder encoder;
     private ByteArrayOutputStream out;
     private Map<String, ? super Object> dictionary;
-    private Charset charset;
-    private String charsetName;
 
     @Before
     public void setUp() throws Exception {
         out = new ByteArrayOutputStream();
-        charset = Decoder.DEFAULT_CHARSET;
-        charsetName = charset.name();
         encoder = new DictionaryEncoder(new BEncoder(out, charset), out);
     }
 
