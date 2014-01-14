@@ -5,6 +5,7 @@ import com.ffbit.bencode.integer.IntegerEncoder;
 import com.ffbit.bencode.list.ListEncoder;
 import com.ffbit.bencode.string.StringEncoder;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
@@ -35,7 +36,7 @@ public class BEncoder implements Encoder<Object> {
     }
 
     @Override
-    public void encode(Object input) {
+    public void encode(Object input) throws IOException {
         if (!isApplicable(input)) {
             throw new BEncoderException("An unsupported input occurred <" + input + ">");
         }

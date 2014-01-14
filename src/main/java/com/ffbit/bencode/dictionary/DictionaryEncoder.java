@@ -28,23 +28,15 @@ public class DictionaryEncoder implements Encoder<Map<String, ?>> {
     }
 
     @Override
-    public void encode(Map<String, ?> input) {
-        try {
-            out.write(PREFIX);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void encode(Map<String, ?> input) throws IOException {
+        out.write(PREFIX);
 
         for (String key : getSortedKeys(input)) {
             parent.encode(key);
             parent.encode(input.get(key));
         }
 
-        try {
-            out.write(SUFFIX);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        out.write(SUFFIX);
     }
 
     private List<String> getSortedKeys(Map<String, ?> input) {

@@ -29,16 +29,14 @@ public class ListEncoder implements Encoder<List> {
     }
 
     @Override
-    public void encode(List input) {
-        try {
-            out.write(PREFIX);
-            for (Object e : input) {
-                parent.encode(e);
-            }
-            out.write(SUFFIX);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void encode(List input) throws IOException {
+        out.write(PREFIX);
+
+        for (Object e : input) {
+            parent.encode(e);
         }
+
+        out.write(SUFFIX);
     }
 
 }

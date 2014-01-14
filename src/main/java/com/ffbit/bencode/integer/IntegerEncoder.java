@@ -24,14 +24,10 @@ public class IntegerEncoder implements Encoder<Integer> {
     }
 
     @Override
-    public void encode(Integer input) {
+    public void encode(Integer input) throws IOException {
         String result = PREFIX + input + SUFFIX;
 
-        try {
-            out.write(result.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        out.write(result.getBytes());
     }
 
 }

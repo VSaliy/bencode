@@ -26,16 +26,12 @@ public class StringEncoder implements Encoder<String> {
     }
 
     @Override
-    public void encode(String input) {
+    public void encode(String input) throws IOException {
         byte[] content = input.getBytes(charset);
         String prefix = String.valueOf(content.length) + SEPARATOR;
 
-        try {
-            out.write(prefix.getBytes(charset));
-            out.write(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        out.write(prefix.getBytes(charset));
+        out.write(content);
     }
 
 }
