@@ -15,7 +15,6 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class StringEncoderTest {
-
     private Charset charset = Decoder.DEFAULT_CHARSET;
 
     @Test
