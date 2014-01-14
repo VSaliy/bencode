@@ -24,7 +24,7 @@ public class BEncoder {
     public BEncoder(OutputStream out, Charset charset) {
         stringEncoder = new StringEncoder(out, charset);
         integerEncoder = new IntegerEncoder(out);
-        dictionaryEncoder = new DictionaryEncoder(this);
+        dictionaryEncoder = new DictionaryEncoder(this, out);
         listEncoder = new ListEncoder(this, out);
     }
 

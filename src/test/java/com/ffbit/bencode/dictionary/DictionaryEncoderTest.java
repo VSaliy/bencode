@@ -1,44 +1,50 @@
 package com.ffbit.bencode.dictionary;
 
 import com.ffbit.bencode.BEncoder;
+import com.ffbit.bencode.Decoder;
 import com.ffbit.bencode.Encoder;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static java.util.Collections.emptyMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@Ignore
 public class DictionaryEncoderTest {
     private Encoder encoder;
-    private OutputStream out;
+    private ByteArrayOutputStream out;
     private Map<String, ? super Object> dictionary;
+    private Charset charset;
+    private String charsetName;
 
     @Before
     public void setUp() throws Exception {
         out = new ByteArrayOutputStream();
-        encoder = new DictionaryEncoder(new BEncoder(out));
+        charset = Decoder.DEFAULT_CHARSET;
+        charsetName = charset.name();
+        encoder = new DictionaryEncoder(new BEncoder(out, charset), out);
     }
 
     @Test
     public void itShouldEncodeEmptyDictionary() throws Exception {
-        dictionary = Collections.emptyMap();
+        encoder.encode(emptyMap());
 
-        assertThat(encoder.encode(dictionary), is("de"));
+        assertThat(out.toString(charsetName), is("de"));
     }
 
     @Test
     public void itShouldEncodeDictionaryOfStringAndInteger() throws Exception {
         dictionary = Collections.<String, Object>singletonMap("answer", 42);
 
-        assertThat(encoder.encode(dictionary), is("d6:answeri42ee"));
+        encoder.encode(dictionary);
+
+        assertThat(out.toString(charsetName), is("d6:answeri42ee"));
     }
 
     @Test
@@ -47,7 +53,9 @@ public class DictionaryEncoderTest {
         dictionary.put("z", "end");
         dictionary.put("a", "beginning");
 
-        assertThat(encoder.encode(dictionary), is("d1:a9:beginning1:z3:ende"));
+        encoder.encode(dictionary);
+
+        assertThat(out.toString(charsetName), is("d1:a9:beginning1:z3:ende"));
     }
 
 }

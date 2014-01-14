@@ -23,17 +23,8 @@ public class BEncoderTest {
         encoder = new BEncoder(out);
     }
 
-    @Ignore
-    @Test
-    public void itShouldEncodeComplexData() throws Exception {
-        List<?> input = asList("1", 2, singletonMap("key", asList(1, "2")));
-
-        assertThat(encoder.encode(input.toArray()), is("1:1i2ed3:keyli1e1:2ee"));
-    }
-
     @Test
     public void itShouldEncodeStringAndInteger() throws Exception {
-        encoder = new BEncoder(out);
         encoder.encode("foo", 42);
 
         assertThat(out.toString(), is("3:fooi42e"));
@@ -47,6 +38,14 @@ public class BEncoderTest {
     @Test(expected = BEncoderException.class)
     public void itShouldRejectUnsupportedTypes() throws Exception {
         encoder.encode(new Object());
+    }
+
+    @Test
+    public void itShouldEncodeComplexData() throws Exception {
+        List<?> input = asList("1", 2, singletonMap("key", asList(1, "2")));
+
+        encoder.encode(input);
+        assertThat(out.toString(), is("l1:1i2ed3:keyli1e1:2eee"));
     }
 
 }
