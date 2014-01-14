@@ -26,6 +26,16 @@ public class ListEncoderTest {
     }
 
     @Test
+    public void itShouldBeApplicableForLists() throws Exception {
+        assertThat(encoder.isApplicable(emptyList()), is(true));
+    }
+
+    @Test
+    public void itShouldBeApplicableForNull() throws Exception {
+        assertThat(encoder.isApplicable(null), is(false));
+    }
+
+    @Test
     public void itShouldEncodeEmptyList() throws Exception {
         encoder.encode(emptyList());
 

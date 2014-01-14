@@ -21,6 +21,11 @@ public class StringEncoder implements Encoder<String> {
     }
 
     @Override
+    public boolean isApplicable(Object value) {
+        return value instanceof String;
+    }
+
+    @Override
     public String encode(String input) {
         if (charset == null) {
             return String.valueOf(input.length()) + SEPARATOR + input;

@@ -8,6 +8,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -56,6 +58,31 @@ public class BEncoderTest {
         encoder.encode(input);
 
         assertThat(out.toString(charsetName), is("l1:1i2ed3:keyli1e1:2eee"));
+    }
+
+    @Test
+    public void itShouldBeApplicableForStrings() throws Exception {
+        assertThat(encoder.isApplicable("a"), is(true));
+    }
+
+    @Test
+    public void itShouldBeApplicableForIntegers() throws Exception {
+        assertThat(encoder.isApplicable(1), is(true));
+    }
+
+    @Test
+    public void itShouldBeApplicableForLists() throws Exception {
+        assertThat(encoder.isApplicable(emptyList()), is(true));
+    }
+
+    @Test
+    public void itShouldBeApplicableForMaps() throws Exception {
+        assertThat(encoder.isApplicable(emptyMap()), is(true));
+    }
+
+    @Test
+    public void itShouldBeApplicableForNull() throws Exception {
+        assertThat(encoder.isApplicable(null), is(false));
     }
 
 }

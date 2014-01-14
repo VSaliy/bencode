@@ -24,6 +24,11 @@ public class ListEncoder implements Encoder<List> {
     }
 
     @Override
+    public boolean isApplicable(Object value) {
+        return value instanceof List;
+    }
+
+    @Override
     public String encode(List input) {
         if (out == null) {
             return PREFIX + parent.encode(input.toArray()) + SUFFIX;

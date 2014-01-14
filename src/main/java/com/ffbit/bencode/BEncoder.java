@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
-public class BEncoder {
+public class BEncoder implements Encoder<Object> {
     private Encoder stringEncoder;
     private Encoder integerEncoder;
     private Encoder dictionaryEncoder;
@@ -28,6 +28,15 @@ public class BEncoder {
         listEncoder = new ListEncoder(this, out);
     }
 
+    @Override
+    public boolean isApplicable(Object value) {
+        return stringEncoder.isApplicable(value)
+                || integerEncoder.isApplicable(value)
+                || listEncoder.isApplicable(value)
+                || dictionaryEncoder.isApplicable(value);
+    }
+
+    @Override
     public String encode(Object input) {
         if (input == null) {
             throw new BEncoderException("A null value occurred");

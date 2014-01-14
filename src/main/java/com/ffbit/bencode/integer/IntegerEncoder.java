@@ -19,6 +19,11 @@ public class IntegerEncoder implements Encoder<Integer> {
     }
 
     @Override
+    public boolean isApplicable(Object value) {
+        return value instanceof Integer;
+    }
+
+    @Override
     public String encode(Integer input) {
         String result = PREFIX + input + SUFFIX;
 

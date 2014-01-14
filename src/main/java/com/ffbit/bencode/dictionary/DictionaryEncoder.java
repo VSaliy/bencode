@@ -23,6 +23,11 @@ public class DictionaryEncoder implements Encoder<Map<String, ?>> {
     }
 
     @Override
+    public boolean isApplicable(Object value) {
+        return value instanceof Map;
+    }
+
+    @Override
     public String encode(Map<String, ?> input) {
         StringBuilder output = new StringBuilder(PREFIX);
 

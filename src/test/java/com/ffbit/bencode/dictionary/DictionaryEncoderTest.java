@@ -31,6 +31,16 @@ public class DictionaryEncoderTest {
     }
 
     @Test
+    public void itShouldBeApplicableForMaps() throws Exception {
+        assertThat(encoder.isApplicable(emptyMap()), is(true));
+    }
+
+    @Test
+    public void itShouldBeApplicableForNull() throws Exception {
+        assertThat(encoder.isApplicable(null), is(false));
+    }
+
+    @Test
     public void itShouldEncodeEmptyDictionary() throws Exception {
         encoder.encode(emptyMap());
 
