@@ -28,9 +28,7 @@ public class DictionaryEncoder implements Encoder<Map<String, ?>> {
     }
 
     @Override
-    public String encode(Map<String, ?> input) {
-        StringBuilder output = new StringBuilder(PREFIX);
-
+    public void encode(Map<String, ?> input) {
         try {
             out.write(PREFIX);
         } catch (IOException e) {
@@ -38,19 +36,15 @@ public class DictionaryEncoder implements Encoder<Map<String, ?>> {
         }
 
         for (String key : getSortedKeys(input)) {
-            output.append(parent.encode(key));
-            output.append(parent.encode(input.get(key)));
+            parent.encode(key);
+            parent.encode(input.get(key));
         }
-
-        output.append(SUFFIX);
 
         try {
             out.write(SUFFIX);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return output.toString();
     }
 
     private List<String> getSortedKeys(Map<String, ?> input) {

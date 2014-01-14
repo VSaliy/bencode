@@ -29,12 +29,7 @@ public class ListEncoder implements Encoder<List> {
     }
 
     @Override
-    public String encode(List input) {
-        if (out == null) {
-            return PREFIX + parent.encode(input.toArray()) + SUFFIX;
-        }
-
-
+    public void encode(List input) {
         try {
             out.write(PREFIX);
             for (Object e : input) {
@@ -44,8 +39,6 @@ public class ListEncoder implements Encoder<List> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 
 }

@@ -26,11 +26,7 @@ public class StringEncoder implements Encoder<String> {
     }
 
     @Override
-    public String encode(String input) {
-        if (charset == null) {
-            return String.valueOf(input.length()) + SEPARATOR + input;
-        }
-
+    public void encode(String input) {
         byte[] content = input.getBytes(charset);
         String prefix = String.valueOf(content.length) + SEPARATOR;
 
@@ -40,8 +36,6 @@ public class StringEncoder implements Encoder<String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 
 }

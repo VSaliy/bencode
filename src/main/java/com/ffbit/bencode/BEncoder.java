@@ -35,7 +35,7 @@ public class BEncoder implements Encoder<Object> {
     }
 
     @Override
-    public String encode(Object input) {
+    public void encode(Object input) {
         if (!isApplicable(input)) {
             throw new BEncoderException("An unsupported input occurred <" + input + ">");
         }
@@ -49,8 +49,6 @@ public class BEncoder implements Encoder<Object> {
         } else if (dictionaryEncoder.isApplicable(input)) {
             dictionaryEncoder.encode(input);
         }
-
-        return "";
     }
 
 }

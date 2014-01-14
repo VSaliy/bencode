@@ -38,17 +38,6 @@ public class IntegerEncoderTest {
             "-1, i-1e",
             "42, i42e"
     })
-    public void itShouldEncodeIntegersOld(Integer input, String expectedOutput) throws Exception {
-        assertThat(encoder.encode(input), is(expectedOutput));
-    }
-
-    @Test
-    @Parameters({
-            "0, i0e",
-            "1, i1e",
-            "-1, i-1e",
-            "42, i42e"
-    })
     public void itShouldEncodeIntegers(Integer input, String expectedOutput) throws Exception {
         OutputStream out = new ByteArrayOutputStream();
         encoder = new IntegerEncoder(out);

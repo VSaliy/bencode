@@ -4,6 +4,6 @@ public interface Encoder<T> {
 
     boolean isApplicable(Object value);
 
-    String encode(T input);
+    void encode(T input);
 
 }
