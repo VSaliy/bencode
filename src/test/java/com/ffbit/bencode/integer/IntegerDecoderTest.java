@@ -21,7 +21,9 @@ public class IntegerDecoderTest {
             "1e",
             "iAe",
             "i1d",
-            "o1e"
+            "o1e",
+            "ie",
+            "i-e"
     })
     public void itShouldRejectMalformedInput(String input) throws Exception {
         ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());

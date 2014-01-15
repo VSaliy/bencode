@@ -31,7 +31,7 @@ public class ListDecoder implements Decoder<List> {
     }
 
     @Override
-    public List<?> decode() throws IOException {
+    public List<Object> decode() throws IOException {
         checkPrefix();
         List<Object> content = readContent();
         checkSuffix();

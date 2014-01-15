@@ -1,6 +1,7 @@
 package com.ffbit.bencode.list;
 
 import com.ffbit.bencode.BDecoder;
+import com.ffbit.bencode.Decoder;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -15,9 +16,17 @@ public class ListDecoderTest {
     @Test
     public void itShouldDecodeEmptyList() throws Exception {
         InputStream in = new ByteArrayInputStream("le".getBytes());
-        ListDecoder decoder = new ListDecoder(in, new BDecoder(in));
+        Decoder decoder = new ListDecoder(in, new BDecoder(in));
 
         assertThat(decoder.decode(), is((Object) new ArrayList<Object>()));
+    }
+
+    @Test(expected = ListDecoderException.class)
+    public void itShouldThrowExceptionOnMalformedInput() throws Exception {
+        InputStream in = new ByteArrayInputStream("a".getBytes());
+        Decoder decoder = new ListDecoder(in, new BDecoder(in));
+
+        decoder.decode();
     }
 
 }
