@@ -8,9 +8,6 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class ListEncoder implements Encoder<List> {
-    public static final char PREFIX = 'l';
-    public static final char SUFFIX = 'e';
-
     private BEncoder parent;
     private OutputStream out;
 
@@ -30,13 +27,13 @@ public class ListEncoder implements Encoder<List> {
 
     @Override
     public void encode(List input) throws IOException {
-        out.write(PREFIX);
+        out.write(LIST_PREFIX);
 
         for (Object e : input) {
             parent.encode(e);
         }
 
-        out.write(SUFFIX);
+        out.write(END_SUFFIX);
     }
 
 }

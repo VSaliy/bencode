@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-public class StringDecoder implements Decoder<String> {
-    private final char SEPARATOR = ':';
+import static com.ffbit.bencode.Encoder.STRING_SEPARATOR;
 
+public class StringDecoder implements Decoder<String> {
     private final InputStream in;
     private final Charset charset;
 
@@ -51,9 +51,10 @@ public class StringDecoder implements Decoder<String> {
     }
 
     private void checkSeparator() {
-        if (current != SEPARATOR) {
+        if (current != STRING_SEPARATOR) {
             throw new StringDecoderException(
-                    "Unexpected separator of string <" + current + ">, expected <" + SEPARATOR + ">");
+                    "Unexpected separator of string <" + current + ">, " +
+                            "expected <" + STRING_SEPARATOR + ">");
         }
     }
 

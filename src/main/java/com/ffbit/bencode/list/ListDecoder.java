@@ -8,9 +8,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ffbit.bencode.Encoder.LIST_PREFIX;
+import static com.ffbit.bencode.Encoder.END_SUFFIX;
+
 public class ListDecoder implements Decoder<List> {
-    private final char PREFIX = 'l';
-    private final char SUFFIX = 'e';
     private BDecoder parent;
     private InputStream in;
     private char current;
@@ -26,7 +27,7 @@ public class ListDecoder implements Decoder<List> {
 
     @Override
     public boolean isApplicable(int b) {
-        return b == PREFIX;
+        return b == LIST_PREFIX;
     }
 
     @Override
@@ -38,9 +39,10 @@ public class ListDecoder implements Decoder<List> {
     }
 
     private void checkPrefix() throws IOException {
-        if (read() != PREFIX) {
+        if (read() != LIST_PREFIX) {
             throw new ListDecoderException(
-                    "Unexpected beginning of list <" + current + ">, expected <" + PREFIX + ">");
+                    "Unexpected beginning of list <" + current + ">, " +
+                            "expected <" + LIST_PREFIX + ">");
         }
 
     }
@@ -54,7 +56,7 @@ public class ListDecoder implements Decoder<List> {
         List<Object> content = new ArrayList<Object>();
 
         in.mark(1);
-        while (read() != SUFFIX) {
+        while (read() != END_SUFFIX) {
             in.reset();
             Object element = parent.decode();
             content.add(element);
@@ -66,9 +68,10 @@ public class ListDecoder implements Decoder<List> {
     }
 
     private void checkSuffix() throws IOException {
-        if (read() != SUFFIX) {
+        if (read() != END_SUFFIX) {
             throw new ListDecoderException(
-                    "Unexpected end of list <" + current + ">, expected <" + SUFFIX + ">");
+                    "Unexpected end of list <" + current + ">, " +
+                            "expected <" + END_SUFFIX + ">");
         }
     }
 

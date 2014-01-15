@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class DictionaryEncoder implements Encoder<Map<String, ?>> {
-    public static final char PREFIX = 'd';
-    public static final char SUFFIX = 'e';
-
     private final BEncoder parent;
     private final OutputStream out;
 
@@ -29,14 +26,14 @@ public class DictionaryEncoder implements Encoder<Map<String, ?>> {
 
     @Override
     public void encode(Map<String, ?> input) throws IOException {
-        out.write(PREFIX);
+        out.write(DICTIONARY_PREFIX);
 
         for (String key : getSortedKeys(input)) {
             parent.encode(key);
             parent.encode(input.get(key));
         }
 
-        out.write(SUFFIX);
+        out.write(END_SUFFIX);
     }
 
     private List<String> getSortedKeys(Map<String, ?> input) {

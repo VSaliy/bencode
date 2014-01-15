@@ -5,9 +5,10 @@ import com.ffbit.bencode.Decoder;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.ffbit.bencode.Encoder.INTEGER_PREFIX;
+import static com.ffbit.bencode.Encoder.END_SUFFIX;
+
 public class IntegerDecoder implements Decoder<Integer> {
-    private final char PREFIX = 'i';
-    private final char SUFFIX = 'e';
     private final char MINUS = '-';
     private final char PLUS = '+';
 
@@ -22,7 +23,7 @@ public class IntegerDecoder implements Decoder<Integer> {
 
     @Override
     public boolean isApplicable(int b) {
-        return b == PREFIX;
+        return b == INTEGER_PREFIX;
     }
 
     @Override
@@ -35,9 +36,10 @@ public class IntegerDecoder implements Decoder<Integer> {
     }
 
     private void checkPrefix() throws IOException {
-        if (read() != PREFIX) {
+        if (read() != INTEGER_PREFIX) {
             throw new IntegerDecoderException(
-                    "Unexpected beginning of integer <" + current + ">, expected <" + PREFIX + ">");
+                    "Unexpected beginning of integer <" + current + ">, " +
+                            "expected <" + INTEGER_PREFIX + ">");
         }
     }
 
@@ -63,9 +65,10 @@ public class IntegerDecoder implements Decoder<Integer> {
     }
 
     private void checkSuffix() throws IOException {
-        if (current != SUFFIX) {
+        if (current != END_SUFFIX) {
             throw new IntegerDecoderException(
-                    "Unexpected end of integer <" + current + ">, expected <" + SUFFIX + ">");
+                    "Unexpected end of integer <" + current + ">, " +
+                            "expected <" + END_SUFFIX + ">");
         }
     }
 

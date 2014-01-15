@@ -8,9 +8,10 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ffbit.bencode.Encoder.DICTIONARY_PREFIX;
+import static com.ffbit.bencode.Encoder.END_SUFFIX;
+
 public class DictionaryDecoder implements Decoder<Map<String, Object>> {
-    public static final char PREFIX = 'd';
-    private static final char SUFFIX = 'e';
     private final InputStream in;
     private final BDecoder parent;
     private char current;
@@ -21,7 +22,7 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
     }
 
     public boolean isApplicable(int b) {
-        return b == PREFIX;
+        return b == DICTIONARY_PREFIX;
     }
 
     @Override
@@ -34,9 +35,10 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
     }
 
     private void checkPrefix() throws IOException {
-        if (read() != PREFIX) {
+        if (read() != DICTIONARY_PREFIX) {
             throw new DictionaryDecoderException(
-                    "Unexpected beginning of dictionary <" + current + ">, expected <" + PREFIX + ">");
+                    "Unexpected beginning of dictionary <" + current + ">, " +
+                            "expected <" + DICTIONARY_PREFIX + ">");
         }
     }
 
@@ -49,7 +51,7 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
         Map<String, Object> content = new HashMap<String, Object>();
 
         in.mark(1);
-        while (read() != SUFFIX && current != -1) {
+        while (read() != END_SUFFIX && current != -1) {
             in.reset();
 
             String key = (String) parent.decode();
@@ -64,9 +66,10 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
     }
 
     private void checkSuffix() throws IOException {
-        if (read() != SUFFIX) {
+        if (read() != END_SUFFIX) {
             throw new DictionaryDecoderException(
-                    "Unexpected beginning of dictionary <" + current + ">, expected <" + PREFIX + ">");
+                    "Unexpected beginning of dictionary <" + current + ">, " +
+                            "expected <" + END_SUFFIX + ">");
         }
     }
 

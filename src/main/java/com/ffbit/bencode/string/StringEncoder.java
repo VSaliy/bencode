@@ -7,8 +7,6 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 
 public class StringEncoder implements Encoder<String> {
-    public static final char SEPARATOR = ':';
-
     private OutputStream out;
     private Charset charset;
 
@@ -28,7 +26,7 @@ public class StringEncoder implements Encoder<String> {
     @Override
     public void encode(String input) throws IOException {
         byte[] content = input.getBytes(charset);
-        String prefix = String.valueOf(content.length) + SEPARATOR;
+        String prefix = String.valueOf(content.length) + STRING_SEPARATOR;
 
         out.write(prefix.getBytes(charset));
         out.write(content);

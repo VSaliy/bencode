@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class IntegerEncoder implements Encoder<Integer> {
-    public static final String PREFIX = "i";
-    public static final String SUFFIX = "e";
-
     private OutputStream out;
 
     public IntegerEncoder() {
@@ -25,7 +22,7 @@ public class IntegerEncoder implements Encoder<Integer> {
 
     @Override
     public void encode(Integer input) throws IOException {
-        String result = PREFIX + input + SUFFIX;
+        String result = String.valueOf(INTEGER_PREFIX) + input + END_SUFFIX;
 
         out.write(result.getBytes());
     }
