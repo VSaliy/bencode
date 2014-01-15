@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class BEncoderTest {
-    private Charset charset = Decoder.DEFAULT_CHARSET;
+    private Charset charset = Encoder.DEFAULT_CHARSET;
     private String charsetName = charset.name();
 
     private BEncoder encoder;

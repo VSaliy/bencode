@@ -1,13 +1,12 @@
 package com.ffbit.bencode.string;
 
-import com.ffbit.bencode.Decoder;
+import com.ffbit.bencode.Encoder;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
@@ -16,7 +15,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class StringDecoderTest {
-    private Charset charset = Decoder.DEFAULT_CHARSET;
+    private Charset charset = Encoder.DEFAULT_CHARSET;
 
     private InputStream in;
     private StringDecoder decoder;

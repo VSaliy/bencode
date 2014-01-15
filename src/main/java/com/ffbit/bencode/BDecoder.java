@@ -18,7 +18,7 @@ public class BDecoder {
     private Decoder dictionaryDecoder;
 
     public BDecoder(InputStream in) {
-        this(in, Decoder.DEFAULT_CHARSET);
+        this(in, Encoder.DEFAULT_CHARSET);
     }
 
     public BDecoder(InputStream in, Charset charset) {

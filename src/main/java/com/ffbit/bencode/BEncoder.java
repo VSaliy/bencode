@@ -17,7 +17,7 @@ public class BEncoder implements Encoder<Object> {
 
 
     public BEncoder(OutputStream out) {
-        this(out, Decoder.DEFAULT_CHARSET);
+        this(out, DEFAULT_CHARSET);
     }
 
     public BEncoder(OutputStream out, Charset charset) {

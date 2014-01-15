@@ -1,7 +1,6 @@
 package com.ffbit.bencode.dictionary;
 
 import com.ffbit.bencode.BEncoder;
-import com.ffbit.bencode.Decoder;
 import com.ffbit.bencode.Encoder;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +16,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class DictionaryEncoderTest {
-    private Charset charset = Decoder.DEFAULT_CHARSET;
+    private Charset charset = Encoder.DEFAULT_CHARSET;
     private String charsetName = charset.name();
 
     private Encoder encoder;
