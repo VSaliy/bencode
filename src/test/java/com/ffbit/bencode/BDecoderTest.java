@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -69,6 +71,14 @@ public class BDecoderTest {
         }};
 
         assertThat(decoder.decode(), is((Object) expected));
+    }
+
+    @Test
+    public void itShouldBeIterable() throws Exception {
+        InputStream in = new ByteArrayInputStream("1:ai42eld3:key5:valueee".getBytes());
+        decoder = new BDecoder(in);
+
+        assertThat(decoder, hasItems("a", 42, singletonList(singletonMap("key", "value"))));
     }
 
 }

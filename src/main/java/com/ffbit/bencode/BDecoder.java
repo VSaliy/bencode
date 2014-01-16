@@ -8,14 +8,16 @@ import com.ffbit.bencode.string.StringDecoder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Iterator;
 
-public class BDecoder {
+public class BDecoder implements Iterable<Object>, Iterator<Object> {
     private InputStream in;
 
     private Decoder stringDecoder;
     private Decoder integerDecoder;
     private Decoder listDecoder;
     private Decoder dictionaryDecoder;
+    private int current = -1;
 
     public BDecoder(InputStream in) {
         this(in, Encoder.DEFAULT_CHARSET);
@@ -31,24 +33,56 @@ public class BDecoder {
 
     public Object decode() throws IOException {
         in.mark(1);
-        int i = in.read();
+        current = in.read();
 
         Decoder decoder;
 
-        if (listDecoder.isApplicable(i)) {
+        if (listDecoder.isApplicable(current)) {
             decoder = listDecoder;
-        } else if (dictionaryDecoder.isApplicable(i)) {
+        } else if (dictionaryDecoder.isApplicable(current)) {
             decoder = dictionaryDecoder;
-        } else if (integerDecoder.isApplicable(i)) {
+        } else if (integerDecoder.isApplicable(current)) {
             decoder = integerDecoder;
-        } else if (stringDecoder.isApplicable(i)) {
+        } else if (stringDecoder.isApplicable(current)) {
             decoder = stringDecoder;
         } else {
-            throw new BDecoderException("An unsupported symbol <" + (char) i + "> occurred");
+            throw new BDecoderException("An unsupported symbol <" + (char) current + "> occurred");
         }
 
         in.reset();
         return decoder.decode();
+    }
+
+    @Override
+    public Iterator<Object> iterator() {
+        return this;
+    }
+
+    @Override
+    public boolean hasNext() {
+        try {
+            in.mark(1);
+            current = in.read();
+            in.reset();
+
+            return current != -1;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Object next() {
+        try {
+            return decode();
+        } catch (IOException e) {
+            throw new BDecoderException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void remove() {
+
     }
 
 }

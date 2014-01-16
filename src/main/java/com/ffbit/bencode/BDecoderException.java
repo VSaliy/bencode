@@ -7,4 +7,8 @@ public class BDecoderException extends RuntimeException {
         super(message);
     }
 
+    public BDecoderException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }
