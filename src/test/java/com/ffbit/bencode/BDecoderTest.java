@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
@@ -79,6 +80,28 @@ public class BDecoderTest {
         decoder = new BDecoder(in);
 
         assertThat(decoder, hasItems("a", 42, singletonList(singletonMap("key", "value"))));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void itShouldNotSupportRemovingOfElements() throws Exception {
+        decoder = new BDecoder(null);
+
+        decoder.remove();
+    }
+
+    @Test
+    public void itShouldHaveNoElementsLeft() throws Exception {
+        decoder = new BDecoder(new ByteArrayInputStream(new byte[]{}));
+
+        assertThat(decoder.hasNext(), is(false));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void itShouldThrowNoSuchElementExceptionWhenNoElementsLeft() throws Exception {
+        decoder = new BDecoder(new ByteArrayInputStream(new byte[]{}));
+
+        assertThat(decoder.hasNext(), is(false));
+        decoder.next();
     }
 
 }
