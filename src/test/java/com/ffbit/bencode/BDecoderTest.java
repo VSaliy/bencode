@@ -3,6 +3,7 @@ package com.ffbit.bencode;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -13,6 +14,10 @@ import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import static com.ffbit.bencode.Encoder.INTEGER_PREFIX;
 
 public class BDecoderTest {
     private BDecoder decoder;
@@ -101,6 +106,37 @@ public class BDecoderTest {
         decoder = new BDecoder(new ByteArrayInputStream(new byte[]{}));
 
         assertThat(decoder.hasNext(), is(false));
+        decoder.next();
+    }
+
+    @Test
+    public void itShouldNotHaveNextOnIOException() throws Exception {
+        InputStream in = mock(InputStream.class);
+        decoder = new BDecoder(in);
+        when(in.read()).thenThrow(IOException.class);
+
+        assertThat(decoder.hasNext(), is(false));
+    }
+
+    @Test(expected = BDecoderException.class)
+    public void itShouldThrowBDecoderExceptionWhenUnsupportedByteOccurred() throws Exception {
+        decoder = new BDecoder(new ByteArrayInputStream("a".getBytes()));
+
+        assertThat(decoder.hasNext(), is(true));
+        decoder.next();
+    }
+
+    @Test(expected = BDecoderException.class)
+    public void itShouldWrapIOExceptionToBDecoderException() throws Exception {
+        InputStream in = mock(InputStream.class);
+        decoder = new BDecoder(in);
+        when(in.read())
+                .thenReturn((int) INTEGER_PREFIX)
+                .thenReturn((int) '4')
+                .thenThrow(IOException.class);
+
+        assertThat(decoder.hasNext(), is(true));
+
         decoder.next();
     }
 
