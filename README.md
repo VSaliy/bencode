@@ -73,6 +73,7 @@ Output:
 {ключ=[значение 1, {ключ 2=42}]}
 ````
 
-## Good to read
+## Links
 
+- [Bencode](http://en.wikipedia.org/wiki/Bencode)
 - [Bencode Stream Parsing in Java](http://www.codecommit.com/blog/java/bencode-stream-parsing-in-java)
