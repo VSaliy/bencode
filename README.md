@@ -4,3 +4,73 @@ Java implementation of the [Bencode](http://en.wikipedia.org/wiki/Bencode) forma
 
 [![Build Status](https://travis-ci.org/ffbit/bencode.png)](https://travis-ci.org/ffbit/bencode)
 [![Coverage Status](https://coveralls.io/repos/ffbit/bencode/badge.png)](https://coveralls.io/r/ffbit/bencode)
+
+
+## Usage examples
+
+### US-ASCII
+
+As the original algorithm specifies, default charset encoding is US-ASCII.
+So, this charset is used by default.
+
+````
+ByteArrayOutputStream out = new ByteArrayOutputStream();
+BEncoder encoder = new BEncoder(out);
+
+List<Object> data = asList(1, "foo", asList("1", 42),
+        singletonMap("key", asList("foo", singletonMap("a", 42))));
+
+for (Object datum : data) {
+    encoder.encode(datum);
+}
+
+InputStream in = new ByteArrayInputStream(out.toByteArray());
+BDecoder decoder = new BDecoder(in);
+
+while (decoder.hasNext()) {
+    System.out.println(decoder.next());
+}
+````
+Output:
+````
+1
+foo
+[1, 42]
+{key=[foo, {a=42}]}
+````
+
+### Other charset encodings
+
+If you need, for example Cyrillic alphabet's symbols support, you can use the UTF-8 charset.
+
+````
+Charset charset = Charset.forName("UTF-8");
+
+ByteArrayOutputStream out = new ByteArrayOutputStream();
+BEncoder encoder = new BEncoder(out, charset);
+
+List<Object> data = asList(1, "слово", asList("один", 42),
+        singletonMap("ключ", asList("значение 1", singletonMap("ключ 2", 42))));
+
+for (Object datum : data) {
+    encoder.encode(datum);
+}
+
+InputStream in = new ByteArrayInputStream(out.toByteArray());
+BDecoder decoder = new BDecoder(in, charset);
+
+while (decoder.hasNext()) {
+    System.out.println(decoder.next());
+}
+````
+Output:
+````
+1
+слово
+[один, 42]
+{ключ=[значение 1, {ключ 2=42}]}
+````
+
+## Good to read
+
+- [Bencode Stream Parsing in Java](http://www.codecommit.com/blog/java/bencode-stream-parsing-in-java)

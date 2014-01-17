@@ -22,7 +22,6 @@ public class EncoderDecoderTest {
         encoder.encode(asList("1", 42));
         encoder.encode(singletonMap("key", asList("foo", singletonMap("a", 42))));
 
-
         InputStream in = new ByteArrayInputStream(out.toByteArray());
         BDecoder decoder = new BDecoder(in);
 
@@ -32,6 +31,5 @@ public class EncoderDecoderTest {
         assertThat(decoder.decode(),
                 is((Object) singletonMap("key", asList("foo", singletonMap("a", 42)))));
     }
-
 
 }
