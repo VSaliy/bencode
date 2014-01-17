@@ -5,12 +5,13 @@ import com.ffbit.bencode.integer.IntegerDecoder;
 import com.ffbit.bencode.list.ListDecoder;
 import com.ffbit.bencode.string.StringDecoder;
 
-import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import static com.ffbit.bencode.Decoder.EOF;
 
 public class BDecoder implements Iterable<Object>, Iterator<Object> {
     private InputStream in;
@@ -19,7 +20,7 @@ public class BDecoder implements Iterable<Object>, Iterator<Object> {
     private Decoder integerDecoder;
     private Decoder listDecoder;
     private Decoder dictionaryDecoder;
-    private int current = -1;
+    private int current = EOF;
 
     public BDecoder(InputStream in) {
         this(in, Encoder.DEFAULT_CHARSET);
@@ -64,7 +65,7 @@ public class BDecoder implements Iterable<Object>, Iterator<Object> {
             current = in.read();
             in.reset();
 
-            return current != -1;
+            return current != EOF;
         } catch (IOException e) {
             return false;
         }

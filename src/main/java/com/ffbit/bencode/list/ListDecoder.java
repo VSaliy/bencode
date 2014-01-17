@@ -56,7 +56,7 @@ public class ListDecoder implements Decoder<List> {
         List<Object> content = new ArrayList<Object>();
 
         in.mark(1);
-        while (read() != END_SUFFIX) {
+        while (read() != END_SUFFIX && current != EOF) {
             in.reset();
             Object element = parent.decode();
             content.add(element);

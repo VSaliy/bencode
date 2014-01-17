@@ -51,7 +51,7 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
         Map<String, Object> content = new HashMap<String, Object>();
 
         in.mark(1);
-        while (read() != END_SUFFIX && current != -1) {
+        while (read() != END_SUFFIX && current != EOF) {
             in.reset();
 
             String key = (String) parent.decode();
