@@ -36,7 +36,10 @@ public class BDecoder implements Iterable<Object>, Iterator<Object> {
     }
 
     public Object decode() throws IOException {
-        hasNext();
+        if (!hasNext()) {
+            throw new NoSuchElementException("There are no elements left");
+        }
+
         Decoder decoder;
 
         if (listDecoder.isApplicable(current)) {
@@ -74,10 +77,6 @@ public class BDecoder implements Iterable<Object>, Iterator<Object> {
 
     @Override
     public Object next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException("There are no elements left");
-        }
-
         try {
             return decode();
         } catch (IOException e) {
