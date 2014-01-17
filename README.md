@@ -13,6 +13,7 @@ Java implementation of the [Bencode](http://en.wikipedia.org/wiki/Bencode) forma
 As the original algorithm specifies, default charset encoding is US-ASCII.
 So, this charset is used by default.
 
+See [EncoderDecoderExample.java](https://github.com/ffbit/bencode/blob/master/src/test/java/com/ffbit/bencode/EncoderDecoderExample.java).
 ````
 ByteArrayOutputStream out = new ByteArrayOutputStream();
 BEncoder encoder = new BEncoder(out);
@@ -27,8 +28,8 @@ for (Object datum : data) {
 InputStream in = new ByteArrayInputStream(out.toByteArray());
 BDecoder decoder = new BDecoder(in);
 
-while (decoder.hasNext()) {
-    System.out.println(decoder.next());
+for (Object e : decoder) {
+    System.out.println(e);
 }
 ````
 Output:
@@ -43,6 +44,7 @@ foo
 
 If you need, for example Cyrillic alphabet's symbols support, you can use the UTF-8 charset.
 
+See [EncoderDecoderUtf8Example.java](https://github.com/ffbit/bencode/blob/master/src/test/java/com/ffbit/bencode/EncoderDecoderUtf8Example.java).
 ````
 Charset charset = Charset.forName("UTF-8");
 
@@ -59,8 +61,8 @@ for (Object datum : data) {
 InputStream in = new ByteArrayInputStream(out.toByteArray());
 BDecoder decoder = new BDecoder(in, charset);
 
-while (decoder.hasNext()) {
-    System.out.println(decoder.next());
+for (Object e : decoder) {
+    System.out.println(e);
 }
 ````
 Output:

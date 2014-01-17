@@ -24,8 +24,8 @@ public class EncoderDecoderExample {
         InputStream in = new ByteArrayInputStream(out.toByteArray());
         BDecoder decoder = new BDecoder(in);
 
-        while (decoder.hasNext()) {
-            System.out.println(decoder.next());
+        for (Object e : decoder) {
+            System.out.println(e);
         }
     }
 
