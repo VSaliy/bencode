@@ -77,3 +77,4 @@ Output:
 
 - [Bencode](http://en.wikipedia.org/wiki/Bencode)
 - [Bencode Stream Parsing in Java](http://www.codecommit.com/blog/java/bencode-stream-parsing-in-java)
+- [ruby-bencode](https://github.com/dasch/ruby-bencode/tree/master/lib/bencode/core_ext)
