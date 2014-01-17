@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
 
 import static com.ffbit.bencode.Decoder.EOF;
 
+@SuppressWarnings("rawtypes")
 public class BDecoder implements Iterable<Object>, Iterator<Object> {
     private InputStream in;
 

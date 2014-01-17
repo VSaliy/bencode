@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
+@SuppressWarnings("rawtypes")
 public class BEncoder implements Encoder<Object> {
     private Encoder stringEncoder;
     private Encoder integerEncoder;
@@ -36,6 +37,7 @@ public class BEncoder implements Encoder<Object> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void encode(Object input) throws IOException {
         if (!isApplicable(input)) {
             throw new BEncoderException("An unsupported input occurred <" + input + ">");
