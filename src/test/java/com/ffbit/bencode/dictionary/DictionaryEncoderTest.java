@@ -1,7 +1,9 @@
 package com.ffbit.bencode.dictionary;
 
 import com.ffbit.bencode.BEncoder;
+import com.ffbit.bencode.BEncoderException;
 import com.ffbit.bencode.Encoder;
+import com.ffbit.bencode.string.StringEncoder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,12 +23,13 @@ public class DictionaryEncoderTest {
 
     private Encoder encoder;
     private ByteArrayOutputStream out;
-    private Map<String, ? super Object> dictionary;
+    private Map<? super Object, ? super Object> dictionary;
 
     @Before
     public void setUp() throws Exception {
         out = new ByteArrayOutputStream();
-        encoder = new DictionaryEncoder(new BEncoder(out, charset), out);
+        Encoder keyEncoder = new StringEncoder(out);
+        encoder = new DictionaryEncoder(new BEncoder(out, charset), keyEncoder, out);
     }
 
     @Test
@@ -48,7 +51,7 @@ public class DictionaryEncoderTest {
 
     @Test
     public void itShouldEncodeDictionaryOfStringAndInteger() throws Exception {
-        dictionary = Collections.<String, Object>singletonMap("answer", 42);
+        dictionary = Collections.<Object, Object>singletonMap("answer", 42);
 
         encoder.encode(dictionary);
 
@@ -57,13 +60,20 @@ public class DictionaryEncoderTest {
 
     @Test
     public void itShouldEncodeDictionarySortedByKeysAlphabetically() throws Exception {
-        dictionary = new LinkedHashMap<String, Object>();
+        dictionary = new LinkedHashMap<Object, Object>();
         dictionary.put("z", "end");
         dictionary.put("a", "beginning");
 
         encoder.encode(dictionary);
 
         assertThat(out.toString(charsetName), is("d1:a9:beginning1:z3:ende"));
+    }
+
+    @Test(expected = BEncoderException.class)
+    public void itShouldNotAllowIntegerKeys() throws Exception {
+        dictionary = Collections.<Object, Object>singletonMap(1, "foo");
+
+        encoder.encode(dictionary);
     }
 
 }

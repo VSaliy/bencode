@@ -18,10 +18,12 @@ public class StringEncoderTest {
     private Charset charset = Encoder.DEFAULT_CHARSET;
 
     private Encoder encoder;
+    private ByteArrayOutputStream out;
 
     @Before
     public void setUp() throws Exception {
-        encoder = new StringEncoder();
+        out = new ByteArrayOutputStream();
+        encoder = new StringEncoder(out, charset);
     }
 
     @Test
@@ -40,9 +42,6 @@ public class StringEncoderTest {
             "foo, 3:foo"
     })
     public void itShouldEncodeStrings(String input, String expectedOutput) throws Exception {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Encoder encoder = new StringEncoder(out, charset);
-
         encoder.encode(input);
         assertThat(out.toString(charset.name()), is(expectedOutput));
     }

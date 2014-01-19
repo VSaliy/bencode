@@ -24,7 +24,7 @@ public class BEncoder implements Encoder<Object> {
     public BEncoder(OutputStream out, Charset charset) {
         stringEncoder = new StringEncoder(out, charset);
         integerEncoder = new IntegerEncoder(out);
-        dictionaryEncoder = new DictionaryEncoder(this, out);
+        dictionaryEncoder = new DictionaryEncoder(this, stringEncoder, out);
         listEncoder = new ListEncoder(this, out);
     }
 

@@ -10,7 +10,8 @@ public class StringEncoder implements Encoder<String> {
     private OutputStream out;
     private Charset charset;
 
-    public StringEncoder() {
+    public StringEncoder(OutputStream out) {
+        this(out, DEFAULT_CHARSET);
     }
 
     public StringEncoder(OutputStream out, Charset charset) {
