@@ -16,9 +16,9 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
     private final BDecoder parent;
     private char current;
 
-    public DictionaryDecoder(InputStream in, BDecoder bDecoder) {
+    public DictionaryDecoder(InputStream in, BDecoder parent) {
         this.in = in;
-        this.parent = bDecoder;
+        this.parent = parent;
     }
 
     public boolean isApplicable(int b) {
