@@ -37,4 +37,12 @@ public class DictionaryDecoderTest {
         decoder.decode();
     }
 
+    @Test(expected = BDecoderException.class)
+    public void itShouldNotAllowNonStringKeys() throws Exception {
+        InputStream in = new ByteArrayInputStream("di1ei2ee".getBytes());
+        Decoder decoder = new DictionaryDecoder(in, new BDecoder(in));
+
+        decoder.decode();
+    }
+
 }

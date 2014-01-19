@@ -1,6 +1,7 @@
 package com.ffbit.bencode.dictionary;
 
 import com.ffbit.bencode.BDecoder;
+import com.ffbit.bencode.BDecoderException;
 import com.ffbit.bencode.Decoder;
 
 import java.io.IOException;
@@ -54,7 +55,7 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
         while (read() != END_SUFFIX && current != EOF) {
             in.reset();
 
-            String key = (String) parent.decode();
+            String key = decodeKey();
             Object value = parent.decode();
             content.put(key, value);
 
@@ -63,6 +64,16 @@ public class DictionaryDecoder implements Decoder<Map<String, Object>> {
         in.reset();
 
         return content;
+    }
+
+    private String decodeKey() throws IOException {
+        Object key = parent.decode();
+
+        if (key instanceof String) {
+            return (String) key;
+        }
+
+        throw new BDecoderException("Dictionary expected a string key, but was <" + key + ">");
     }
 
     private void checkSuffix() throws IOException {
